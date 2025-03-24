@@ -1,5 +1,5 @@
 package com.abc;
-
+//semra
 public class RetailModule {
 	private int product_id;
 	public int getProduct_id() {
