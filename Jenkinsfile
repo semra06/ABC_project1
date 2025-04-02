@@ -45,14 +45,17 @@ pipeline {
                 }
             }
         }
+        stage('Clean Up Old Containers') {
+            steps {
+                sh """
+                    # Eski konteynerleri durdur ve sil
+                    docker ps -q --filter "name=my-tomcat-*" | xargs -r docker stop | xargs -r docker rm
+                """
+            }
+        }
         stage('Deployment') {
             steps {
                 sh """
-                    # Portu kontrol et ve eski konteyner varsa durdur ve sil
-                    docker ps -q --filter "name=my-tomcat-${env.BUILD_NUMBER}" | grep -q . && \
-                    docker stop my-tomcat-${env.BUILD_NUMBER} && \
-                    docker rm my-tomcat-${env.BUILD_NUMBER} || true
-        
                     # Yeni konteyneri başlat
                     docker run -itd -p 8282:8080 --name my-tomcat-${env.BUILD_NUMBER} semra06/my-docker-image:${env.BUILD_NUMBER}
                 """
