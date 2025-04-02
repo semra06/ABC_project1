@@ -51,6 +51,10 @@ pipeline {
                 docker stop abc_project || true
                 docker rm abc_project || true
                 sh "docker run -itd -p 8181:8080 --name abc_project_${env.BUILD_NUMBER} ${IMAGE_NAME}:${env.BUILD_NUMBER}"
+                # Tomcat Cache Temizleme
+                docker exec abc_project rm -rf /usr/local/tomcat/work/Catalina/localhost/*
+                docker restart abc_project
+                '''
             }
         }
     }
