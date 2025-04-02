@@ -1,3 +1,6 @@
+pipeline {
+    agent any
+
     stages {
         stage('code checkout') {
             steps {
@@ -37,4 +40,5 @@
                 sh "docker run -itd -p 8080:8080 --name abc_project_${BUILD_NUMBER} ${IMAGE_NAME}:${BUILD_NUMBER}"
             }
         }
-    }
+    } // <-- Closing the 'stages' block
+} // <-- Closing the 'pipeline' block
