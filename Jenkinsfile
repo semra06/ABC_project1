@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        IMAGE_NAME = "my-docker-image-${env.BUILD_NUMBER}"  // İmaj adını BUILD_NUMBER ile özelleştirin
+        IMAGE_NAME = "semra06/my-docker-image-${env.BUILD_NUMBER}"  // İmaj adını BUILD_NUMBER ile özelleştirin
     }
     stages {
         stage('code checkout') {
