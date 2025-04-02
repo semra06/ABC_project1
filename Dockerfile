@@ -1,14 +1,11 @@
-# Use an official Java runtime as a parent image
-FROM openjdk:11-jre-slim
+# Tomcat 9 kullanarak bir base image oluştur
+FROM tomcat:9.0-jdk11
 
-# Set the working directory inside the container
-WORKDIR /app
+# Tomcat'in webapps dizinine .war dosyasını kopyala
+COPY target/ABCtechnologies-1.0.war /usr/local/tomcat/webapps/ABCtechnologies.war
 
-# Copy the .war file from the host to the container
-COPY target/ABCtechnologies-1.0.war /app/ABCtechnologies.war
-
-# Expose the port that the app runs on (replace 8080 with your app's port)
+# Tomcat 8080 portunda çalışıyor
 EXPOSE 8080
 
-# Run the .war file using Java
-CMD ["java", "-jar", "/app/ABCtechnologies.war"]
+# Tomcat başlat
+CMD ["catalina.sh", "run"]
