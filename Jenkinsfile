@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        IMAGE_NAME = "my-docker-image-${env.BUILD_NUMBER}"  // Replace with your desired image name
+        IMAGE_NAME = "my-docker-image-${env.BUILD_NUMBER}"  // İmaj adını BUILD_NUMBER ile özelleştirin
     }
     stages {
         stage('code checkout') {
@@ -26,24 +26,27 @@ pipeline {
         }
         stage('Check Directory') {
             steps {
-                sh 'pwd'      // Print working directory
-                sh 'ls -l'    // List files in the current directory
+                sh 'pwd'      // Çalışma dizinini yazdır
+                sh 'ls -l'    // Dizin içeriğini listele
             }
         }
-        stage('build docker image') {
+        stage('Build Docker Image') {
             steps {
-                sh 'cp target/ABCtechnologies-1.0.war .'
-                sh "docker build -t ${IMAGE_NAME}:${BUILD_NUMBER} ."
+                sh 'cp target/ABCtechnologies-1.0.war .'  // WAR dosyasını kopyala
+                sh "docker build -t ${IMAGE_NAME}:${BUILD_NUMBER} ."  // İmajı BUILD_NUMBER ile oluştur
             }
         }
-        stage('push docker image') {
+        stage('Push Docker Image') {
             steps {
-                withDockerRegistry([credentialsId: "docker-registry-credentials", url: 'https://registry.hub.docker.com']) {
+                withDockerRegistry([credentialsId: 'docker-registry-credentials', url: 'https://registry.hub.docker.com']) {
+                    // Docker Hub'a latest tag'ini ve BUILD_NUMBER tag'ini push et
+                    sh "docker tag ${IMAGE_NAME}:${BUILD_NUMBER} my-docker-image:latest"
+                    sh "docker push ${IMAGE_NAME}:${BUILD_NUMBER}"
                     sh "docker push my-docker-image:latest"
                 }
             }
         }
-        stage('deployment') {
+        stage('Deployment') {
             steps {
                 sh "docker run -itd -p 8080:8080 --name abc_project_${BUILD_NUMBER} ${IMAGE_NAME}:${BUILD_NUMBER}"
             }
