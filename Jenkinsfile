@@ -1,10 +1,3 @@
-pipeline {
-	agent any 
-	environment {
-		IMAGE_NAME = "avdeshsainger/ABCtechnologies"
-	}
-	
-	
 	stages {
 		stage('code checkout') {
 			steps {
