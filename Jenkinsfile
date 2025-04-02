@@ -47,7 +47,7 @@ pipeline {
         }
         stage('Deployment') {
             steps {
-                sh "docker run -itd -p 8082:8080 --name my-tomcat ${IMAGE_NAME}:${env.BUILD_NUMBER}"
+                sh "docker run -itd -p 8282:8080 --name my-tomcat ${IMAGE_NAME}:${env.BUILD_NUMBER}"
             }
         }
     }
