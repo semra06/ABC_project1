@@ -48,6 +48,7 @@ pipeline {
         }
         stage('Tag Docker Image') {
             steps {
+                sh 'echo "Tagging image: ${IMAGE_NAME}:${BUILD_NUMBER} -> ${IMAGE_NAME}:latest"'
                 sh "docker tag ${IMAGE_NAME}:${BUILD_NUMBER} ${IMAGE_NAME}:latest"
             }
         }
