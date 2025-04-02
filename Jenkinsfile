@@ -8,7 +8,7 @@ pipeline {
 	stages {
 		stage('code checkout') {
 			steps {
-				git branch: 'main', url: 'https://github.com/inaeon/ABC.git'
+				git branch: 'main', url: 'https://github.com/semra06/ABC_project1.git'
 			}
 		}
 		stage('code compile') {
@@ -34,7 +34,7 @@ pipeline {
 		}
 		stage('push docker image') {
 			steps {
-				withDockerRegistry([credentialsId: "avdeshsainger", url: ""]) {
+				withDockerRegistry([credentialsId: "semra06", url: ""]) {
 					sh "docker push ${IMAGE_NAME}:${BUILD_NUMBER}"
 				}
 			}
