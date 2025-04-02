@@ -24,6 +24,12 @@ pipeline {
                 sh 'mvn package'
             }
         }
+        stage('Check Directory') {
+            steps {
+                sh 'pwd'      // Print working directory
+                sh 'ls -l'    // List files in the current directory
+            }
+        }
         stage('build docker image') {
             steps {
                 sh 'cp target/ABCtechnologies-1.0.war .'
