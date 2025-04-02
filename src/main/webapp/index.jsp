@@ -1,6 +1,6 @@
 <html>
 <body>
-<h2>Welcome to ABC technologies-Semra Konanci Keles</h2>
+<h2>Welcome to ABC technologies-Semra Konanci</h2>
 <h3>This is retail portal</h3>
 <button name="Add Product" value="Add Product" type="button" onclick="addProduct()">Add Product</button>  
 <script>  
