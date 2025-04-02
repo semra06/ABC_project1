@@ -1,54 +1,54 @@
 pipeline {
     agent any
     environment {
-        IMAGE_NAME = "semra06/my-docker-image-${env.BUILD_NUMBER}"  // İmaj adını BUILD_NUMBER ile özelleştirin
+        IMAGE_NAME = "semra06/my-docker-image"
     }
     stages {
-        stage('code checkout') {
+        stage('Code Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/semra06/ABC_project1.git'
             }
         }
-        stage('code compile') {
+        stage('Code Compile') {
             steps {
                 sh 'mvn clean compile'
             }
         }
-        stage('code test') {
+        stage('Code Test') {
             steps {
                 sh 'mvn test'
             }
         }
-        stage('code package') {
+        stage('Code Package') {
             steps {
                 sh 'mvn package'
             }
         }
         stage('Check Directory') {
             steps {
-                sh 'pwd'      // Çalışma dizinini yazdır
-                sh 'ls -l'    // Dizin içeriğini listele
+                sh 'pwd'
+                sh 'ls -l'
             }
         }
         stage('Build Docker Image') {
             steps {
-                sh 'cp target/ABCtechnologies-1.0.war .'  // WAR dosyasını kopyala
-                sh "docker build -t ${IMAGE_NAME}:${BUILD_NUMBER} ."  // İmajı BUILD_NUMBER ile oluştur
+                sh 'cp target/ABCtechnologies-1.0.war .'  
+                sh "docker build -t ${IMAGE_NAME}:${env.BUILD_NUMBER} ."  
             }
         }
         stage('Push Docker Image') {
             steps {
-                withDockerRegistry([credentialsId: 'docker-registry-credentials', url: 'https://registry.hub.docker.com']) {
-                    // Docker Hub'a latest tag'ini ve BUILD_NUMBER tag'ini push et
-                    sh "docker tag ${IMAGE_NAME}:${BUILD_NUMBER} ${IMAGE_NAME}:latest"
-                    sh "docker push ${IMAGE_NAME}:${BUILD_NUMBER}"
+                withDockerRegistry([credentialsId: 'docker-registry-credentials', url: '']) {
+                    sh "docker tag ${IMAGE_NAME}:${env.BUILD_NUMBER} ${IMAGE_NAME}:latest"
+                    sh "docker push ${IMAGE_NAME}:${env.BUILD_NUMBER}"
+                    sh "docker push ${IMAGE_NAME}:latest"
                 }
             }
         }
         stage('Deployment') {
             steps {
-                sh "docker run -itd -p 8080:8080 --name abc_project_${BUILD_NUMBER} ${IMAGE_NAME}:${BUILD_NUMBER}"
+                sh "docker run -itd -p 8080:8080 --name abc_project_${env.BUILD_NUMBER} ${IMAGE_NAME}:${env.BUILD_NUMBER}"
             }
         }
-    } // <-- Closing the 'stages' block
-} // <-- Closing the 'pipeline' block
+    }
+}
