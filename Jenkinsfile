@@ -47,7 +47,7 @@ pipeline {
         }
         stage('Deployment') {
             steps {
-                sh "docker run -itd -p 8080:8080 --name abc_project_${env.BUILD_NUMBER} ${IMAGE_NAME}:${env.BUILD_NUMBER}"
+                sh "docker run -itd -p 9090:8080 --name abc_project_${env.BUILD_NUMBER} ${IMAGE_NAME}:${env.BUILD_NUMBER}"
             }
         }
     }
