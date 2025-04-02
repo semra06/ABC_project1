@@ -47,7 +47,7 @@ pipeline {
         }
         stage('Deployment') {
             steps {
-                sh "docker run -itd -p 8282:8080 --name my-tomcat ${IMAGE_NAME}:${env.BUILD_NUMBER}"
+               sh "docker run -itd -p 8282:8080 --name my-tomcat-${env.BUILD_NUMBER} semra06/my-docker-image:${env.BUILD_NUMBER}"
             }
         }
     }
