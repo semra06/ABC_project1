@@ -47,6 +47,9 @@ pipeline {
         }
         stage('Deployment') {
             steps {
+                sh '''
+                docker stop abc_project || true
+                docker rm abc_project || true
                 sh "docker run -itd -p 8181:8080 --name abc_project_${env.BUILD_NUMBER} ${IMAGE_NAME}:${env.BUILD_NUMBER}"
             }
         }
