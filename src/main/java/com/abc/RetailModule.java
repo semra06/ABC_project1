@@ -1,5 +1,5 @@
 package com.abc;
-//semra
+//semra konanci keles
 public class RetailModule {
 	private int product_id;
 	public int getProduct_id() {
