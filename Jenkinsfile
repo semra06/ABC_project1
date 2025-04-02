@@ -46,6 +46,11 @@ pipeline {
                 }
             }
         }
+        stage('Tag Docker Image') {
+            steps {
+                sh "docker tag ${IMAGE_NAME}:${BUILD_NUMBER} ${IMAGE_NAME}:latest"
+            }
+        }
         stage('Deployment') {
             steps {
                 sh "docker run -itd -p 8080:8080 --name abc_project_${BUILD_NUMBER} ${IMAGE_NAME}:${BUILD_NUMBER}"
