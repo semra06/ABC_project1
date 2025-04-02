@@ -40,7 +40,7 @@ pipeline {
             steps {
                 withDockerRegistry([credentialsId: 'docker-registry-credentials', url: 'https://registry.hub.docker.com']) {
                     // Docker Hub'a latest tag'ini ve BUILD_NUMBER tag'ini push et
-                    sh "docker tag semra06/${IMAGE_NAME}:${BUILD_NUMBER} ${IMAGE_NAME}:latest"
+                    sh "docker tag ${IMAGE_NAME}:${BUILD_NUMBER} ${IMAGE_NAME}:latest"
                     sh "docker push ${IMAGE_NAME}:${BUILD_NUMBER}"
                     sh "docker push my-docker-image:latest"
                 }
