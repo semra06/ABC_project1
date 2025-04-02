@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    environment {
+        IMAGE_NAME = "my-docker-image-${env.BUILD_NUMBER}"  // Replace with your desired image name
+    }
     stages {
         stage('code checkout') {
             steps {
