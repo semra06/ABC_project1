@@ -45,6 +45,11 @@ pipeline {
                 }
             }
         }
+        stage('Clean Up Old Containers') {
+            steps {
+                // Eski container'ı durdur ve sil
+                sh "docker rm -f my-tomcat-${env.BUILD_NUMBER - 1} || true"
+            }
         stage('Deployment') {
             steps {
                sh "docker run -itd -p 8282:8080 --name my-tomcat-${env.BUILD_NUMBER} semra06/my-docker-image:${env.BUILD_NUMBER}"
