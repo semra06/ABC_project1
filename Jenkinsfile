@@ -38,7 +38,7 @@ pipeline {
         }
         stage('push docker image') {
             steps {
-                withDockerRegistry([credentialsId: "semra06", url: 'https://registry.hub.docker.com']) {
+                withDockerRegistry([credentialsId: "docker-registry-credentials", url: 'https://registry.hub.docker.com']) {
                     sh "docker push my-docker-image:latest"
                 }
             }
